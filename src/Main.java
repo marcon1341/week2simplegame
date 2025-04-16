@@ -1,15 +1,54 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+/*
+ * A game has a beginning,
+ * a way to move forward,
+ * goal,
+ * obstacle, enemy or opponent
+ *
+ */
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        //char[] board = {'@', '.', '.', 'Z', '.', '.', '.', '$'}; //8 positions
+        char floor = '.';
+        char hero = '@';
+        char enemy = 'Z';
+        char treasure = '$';
+        int heroPosition = 0;
+        int enemyPosition = 3;
+        int treasurePosition = 7;
+        Scanner in = new Scanner(System.in);
+        //infinite loop - must break out when something happens like getting the treasure
+        System.out.println("Welcome to the game, press ENTER/RETURN to push the hero forward.");
+        int turn = 1;
+        while(true){
+            System.out.printf("Turn %d:\n", turn++);
+            //display board
+            for(int i = 0; i < 8; i++){
+                if(i == heroPosition){
+                    System.out.print(hero);
+                }else if(i == enemyPosition){
+                    System.out.print(enemy);
+                }else if(i == treasurePosition){
+                    System.out.print(treasure);
+                }else{
+                    System.out.print(floor);
+                }
+            }
+            System.out.println("Enter to push forward.");
+            String userInput = in.nextLine();
+            //UPDATE THE STATE
+            heroPosition++; //move forward
+            //COLLISION DETECTION
+            if(heroPosition == enemyPosition){
+                enemyPosition = -1;//remove enemy
+                System.out.println("Hero has vanquished the enemy!!!");
+            }
+            if(heroPosition == treasurePosition){
+                treasurePosition = -1;//remove treasure
+                System.out.println("Hero has taken the treasure!!!");
+                break; //break out of infinite loop.
+            }
         }
+        System.out.println("GAME OVER!!!");
     }
 }
